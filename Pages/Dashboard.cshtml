@@ -1,0 +1,106 @@
+@page
+@model deneme.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "_Layout";
+}
+
+<style>
+    .dashboard-container {
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 6px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 35px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 50px auto;
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dashboard-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-family: 'Fredoka', sans-serif;
+        text-align: center;
+    }
+
+    .welcome-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .dashboard-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dashboard-btn {
+        background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .dashboard-btn:hover {
+        background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        box-shadow: 0 4px 16px rgba(255, 117, 140, 0.25);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-container {
+            margin: 20px;
+            padding: 25px;
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+        }
+
+        .dashboard-buttons {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .dashboard-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="text-center">
+        <h1 class="dashboard-title">Armi CRM</h1>
+        <p class="welcome-text">Hoş geldiniz! CRM sisteminize başarıyla giriş yaptınız.</p>
+        <p class="welcome-text">Üstteki menüden veya alttaki dock bar'dan modüllere erişebilirsiniz.</p>
+        <div class="dashboard-buttons">
+            <a href="/TestPage" class="dashboard-btn">
+                <i class="fas fa-vial me-2"></i>Test Sayfası
+            </a>
+        </div>
+    </div>
+</div> 
+

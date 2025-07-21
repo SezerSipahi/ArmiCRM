@@ -1,0 +1,253 @@
+/* Temel sekme stilleri */
+.nav-tabs {
+    border-bottom: 2px solid rgba(255, 192, 203, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px 10px 0 0;
+    padding: 10px 10px 0 10px;
+}
+
+.nav-tabs .nav-link {
+    color: #333;
+    border: none;
+    padding: 12px 25px;
+    margin-right: 5px;
+    border-radius: 10px 10px 0 0;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Müşteri Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#musteri-bilgileri"] {
+    background: linear-gradient(45deg, rgba(255, 182, 193, 0.2), rgba(255, 218, 185, 0.2));
+}
+
+.nav-tabs .nav-link[href="#musteri-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(255, 182, 193, 0.4), rgba(255, 218, 185, 0.4));
+}
+
+.nav-tabs .nav-link[href="#musteri-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(255, 182, 193, 0.8), rgba(255, 218, 185, 0.8));
+}
+
+/* ERP Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#erp-bilgileri"] {
+    background: linear-gradient(45deg, rgba(144, 238, 144, 0.2), rgba(173, 216, 230, 0.2));
+}
+
+.nav-tabs .nav-link[href="#erp-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(144, 238, 144, 0.4), rgba(173, 216, 230, 0.4));
+}
+
+.nav-tabs .nav-link[href="#erp-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(144, 238, 144, 0.8), rgba(173, 216, 230, 0.8));
+}
+
+/* Özel Yazılım Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#ozel-yazilim-bilgileri"] {
+    background: linear-gradient(45deg, rgba(255, 218, 185, 0.2), rgba(221, 160, 221, 0.2));
+}
+
+.nav-tabs .nav-link[href="#ozel-yazilim-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(255, 218, 185, 0.4), rgba(221, 160, 221, 0.4));
+}
+
+.nav-tabs .nav-link[href="#ozel-yazilim-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(255, 218, 185, 0.8), rgba(221, 160, 221, 0.8));
+}
+
+/* Ağ Depolama Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#ag-depolama-bilgileri"] {
+    background: linear-gradient(45deg, rgba(135, 206, 235, 0.2), rgba(152, 251, 152, 0.2));
+}
+
+.nav-tabs .nav-link[href="#ag-depolama-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(135, 206, 235, 0.4), rgba(152, 251, 152, 0.4));
+}
+
+.nav-tabs .nav-link[href="#ag-depolama-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(135, 206, 235, 0.8), rgba(152, 251, 152, 0.8));
+}
+
+/* Güvenlik Duvarı Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#guvenlik-duvari-bilgileri"] {
+    background: linear-gradient(45deg, rgba(255, 160, 122, 0.2), rgba(255, 192, 203, 0.2));
+}
+
+.nav-tabs .nav-link[href="#guvenlik-duvari-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(255, 160, 122, 0.4), rgba(255, 192, 203, 0.4));
+}
+
+.nav-tabs .nav-link[href="#guvenlik-duvari-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(255, 160, 122, 0.8), rgba(255, 192, 203, 0.8));
+}
+
+/* Modem Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#modem-bilgileri"] {
+    background: linear-gradient(45deg, rgba(221, 160, 221, 0.2), rgba(176, 224, 230, 0.2));
+}
+
+.nav-tabs .nav-link[href="#modem-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(221, 160, 221, 0.4), rgba(176, 224, 230, 0.4));
+}
+
+.nav-tabs .nav-link[href="#modem-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(221, 160, 221, 0.8), rgba(176, 224, 230, 0.8));
+}
+
+/* Webmail Bilgileri sekmesi */
+.nav-tabs .nav-link[href="#webmail-bilgileri"] {
+    background: linear-gradient(45deg, rgba(255, 228, 181, 0.2), rgba(255, 182, 193, 0.2));
+}
+
+.nav-tabs .nav-link[href="#webmail-bilgileri"]:hover {
+    background: linear-gradient(45deg, rgba(255, 228, 181, 0.4), rgba(255, 182, 193, 0.4));
+}
+
+.nav-tabs .nav-link[href="#webmail-bilgileri"].active {
+    background: linear-gradient(45deg, rgba(255, 228, 181, 0.8), rgba(255, 182, 193, 0.8));
+}
+
+/* Aktif sekme için ortak stiller */
+.nav-tabs .nav-link.active {
+    color: #000;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+    color: #000;
+}
+
+.nav-tabs .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: inherit;
+    filter: brightness(1.2);
+}
+
+.tab-content {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 10px 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 192, 203, 0.2);
+    border-top: none;
+}
+
+/* Buton temel stilleri */
+.btn {
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: #fff;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* Müşteri Bilgileri sekmesi butonları */
+#musteri-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+}
+
+#musteri-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #ff8a8e, #f8c0b4);
+}
+
+/* ERP Bilgileri sekmesi butonları */
+#erp-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #84fab0, #8fd3f4);
+}
+
+#erp-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #74eaa0, #7fc3e4);
+}
+
+/* Özel Yazılım Bilgileri sekmesi butonları */
+#ozel-yazilim-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #fbc2eb, #a6c1ee);
+}
+
+#ozel-yazilim-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #ebb2db, #96b1de);
+}
+
+/* Ağ Depolama Bilgileri sekmesi butonları */
+#ag-depolama-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #89f7fe, #66a6ff);
+}
+
+#ag-depolama-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #79e7ee, #5696ef);
+}
+
+/* Güvenlik Duvarı Bilgileri sekmesi butonları */
+#guvenlik-duvari-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #ff9a9e, #ff6b6b);
+}
+
+#guvenlik-duvari-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #ef8a8e, #ef5b5b);
+}
+
+/* Modem Bilgileri sekmesi butonları */
+#modem-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #a8edea, #fed6e3);
+}
+
+#modem-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #98ddda, #eec6d3);
+}
+
+/* Webmail Bilgileri sekmesi butonları */
+#webmail-bilgileri .btn-primary {
+    background: linear-gradient(45deg, #ffd1ff, #fad0c4);
+}
+
+#webmail-bilgileri .btn-primary:hover {
+    background: linear-gradient(45deg, #efc1ef, #eac0b4);
+}
+
+/* İptal butonları için ortak stil */
+.btn-secondary {
+    background: linear-gradient(45deg, #bdc3c7, #95a5a6);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(45deg, #adb3b7, #859596);
+}
+
+/* Kaydet butonları için ekstra parlaklık efekti */
+.btn-primary:active {
+    background-size: 150%;
+    transition: background-size 0.3s ease;
+}
+
+/* Glassmorphism efekti için ek stil */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    border-radius: inherit;
+} 

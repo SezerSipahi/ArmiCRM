@@ -1,0 +1,81 @@
+@page
+@{
+    ViewData["Title"] = "Test Sayfası";
+    Layout = "_Layout";
+}
+
+<style>
+    .test-container {
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 6px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 35px;
+        width: 100%;
+        max-width: 800px;
+        margin: 50px auto;
+        position: relative;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .test-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-family: 'Fredoka', sans-serif;
+        text-align: center;
+    }
+
+    .test-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .back-btn {
+        background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .back-btn:hover {
+        background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        box-shadow: 0 4px 16px rgba(255, 117, 140, 0.25);
+        color: white;
+        text-decoration: none;
+    }
+
+    @@media (max-width: 768px) {
+        .test-container {
+            margin: 20px;
+            padding: 25px;
+        }
+
+        .test-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="test-container">
+    <div class="text-center">
+        <h1 class="test-title">Test Sayfası</h1>
+        <p class="test-text">Bu sayfa dock bar'ın gizli olduğunu test etmek için oluşturuldu.</p>
+        <p class="test-text">Dock bar sadece Ana Sayfa'da görünür, bu sayfada gizlidir.</p>
+        <a href="/Dashboard" class="back-btn">Ana Sayfa'ya Dön</a>
+    </div>
+</div> 

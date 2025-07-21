@@ -1,0 +1,1607 @@
+/* Global Variables */
+:root {
+    --primary-pink: #ffb6b9;
+    --secondary-pink: #ff7eb3;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Global Background */
+html {
+    background: linear-gradient(135deg, #ffb6b9 0%, #ff7eb3 100%);
+    min-height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #ffb6b9 0%, #ff7eb3 100%);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 60px 60px, 40px 40px;
+    background-position: 0 0, 30px 30px;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-attachment: fixed;
+}
+
+/* Layout specific styles */
+body.main-layout {
+    padding-top: 56px; /* Navbar boyutuna göre ayarlandı (48px + 8px margin) */
+}
+
+
+
+body.login-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Navbar Styles - Modern Glassmorphism */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px) saturate(150%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.2) 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.navbar:hover {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(30px) saturate(180%);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.navbar-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0 30px;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 5%; /* Sol tarafta %5 konumda */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.navbar-brand a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-family: 'Fredoka', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.navbar-brand a:hover {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transform: translateY(-1px);
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.navbar:hover .navbar-menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.navbar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 100%);
+    transition: left 0.5s ease;
+    z-index: 0;
+}
+
+.navbar-item:hover::before {
+    left: 100%;
+}
+
+.navbar-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-icon {
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.navbar-text {
+    font-weight: 600;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.3px;
+}
+
+.navbar-user {
+    position: absolute;
+    right: 5%; /* Sağ tarafta %5 konumda */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+}
+
+.user-icon {
+    color: white;
+    font-size: 0.92rem;
+    padding: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.user-icon:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(25px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 140px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px) scale(0.9);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-top: 5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.user-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: none;
+    border-right: none;
+    transform: rotate(45deg);
+    backdrop-filter: blur(25px);
+}
+
+.user-menu:hover .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.user-dropdown a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-dropdown a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    transition: left 0.4s ease;
+}
+
+.user-dropdown a:hover::before {
+    left: 100%;
+}
+
+.user-dropdown a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    text-decoration: none;
+    transform: translateX(3px);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Container padding adjustment */
+.container {
+    padding: 20px;
+}
+
+/* Grid Overlay */
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    animation: waveGrid 15s linear infinite;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+.grid-overlay::before,
+.grid-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(135deg, 
+            transparent 0%, 
+            transparent 48%, 
+            rgba(0, 0, 0, 0.15) 49%, 
+            rgba(0, 0, 0, 0.15) 51%, 
+            transparent 52%, 
+            transparent 100%
+        );
+    background-size: var(--grid-size) var(--grid-size);
+    backdrop-filter: blur(1px);
+}
+
+.grid-overlay::before {
+    transform: translateZ(10px);
+    opacity: 0.7;
+    background-size: calc(var(--grid-size) * 1.5) calc(var(--grid-size) * 1.5);
+    filter: blur(0.5px);
+}
+
+.grid-overlay::after {
+    transform: translateZ(-10px);
+    opacity: 0.5;
+    background-size: calc(var(--grid-size) * 2) calc(var(--grid-size) * 2);
+    filter: blur(1px);
+}
+
+@keyframes waveGrid {
+    0% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0);
+    }
+    25% {
+        transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(30px);
+    }
+    50% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(60px);
+    }
+    75% {
+        transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) translateZ(30px);
+    }
+    100% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0);
+    }
+}
+
+/* Matrix Effect */
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Glass Container */
+.glass-container {
+    position: relative;
+    z-index: 10;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px var(--glass-shadow), 0 1.5px 6px rgba(0,0,0,0.18);
+    border: 1px solid var(--glass-border);
+    padding: 35px;
+    width: 100%;
+    max-width: 400px;
+    animation: containerFadeIn 0.8s ease forwards;
+}
+
+.glass-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 25px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body.main-layout {
+        padding: 15px;
+        padding-top: 56px;
+    }
+    
+    body.login-layout {
+        padding: 15px;
+    }
+    
+    .glass-container {
+        padding: 25px;
+    }
+    
+    .navbar {
+        height: 44px;
+    }
+    
+    .navbar:hover {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(30px) saturate(180%);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .navbar-content {
+        padding: 0 15px;
+    }
+    
+    .navbar-brand {
+        left: 3%;
+    }
+    
+    .navbar-brand a {
+        font-size: 1.2rem;
+    }
+    
+    .search-container {
+        left: 20%; /* Desktop'taki konumu koruyoruz */
+        width: 200px; /* Desktop'a yakın boyut */
+    }
+    
+    .search-box {
+        min-width: 200px;
+        height: 32px; /* Desktop ile aynı yükseklik */
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px; /* Desktop ile aynı radius */
+    }
+    
+    .search-input {
+        font-size: 0.8rem !important;
+        padding: 6px 12px; /* Desktop ile aynı padding */
+        font-weight: 700 !important;
+        letter-spacing: 0.4px !important;
+        text-transform: uppercase !important;
+        font-style: italic !important;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8) !important;
+        transition: none !important;
+        transform: none !important;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: white !important;
+        font-family: 'Fredoka', sans-serif;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .search-button {
+        padding: 4px 6px;
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
+        border-radius: 50%;
+        margin-right: 2px;
+        box-shadow: none !important;
+        width: 24px;
+        height: 24px;
+    }
+    
+    .search-button:hover {
+        background: transparent !important;
+        border: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .search-icon {
+        font-size: 1.4rem !important;
+        text-shadow: none !important; /* Tablet'te de gölge yok */
+        filter: none !important; /* Tablet'te de filter yok */
+    }
+    
+    .search-button:hover .search-icon {
+        transform: none !important;
+        filter: none !important; /* Tablet hover'da da filter yok */
+    }
+    
+    .navbar-user {
+        right: 3%;
+    }
+    
+    .user-icon {
+        font-size: 1.12rem;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    body.main-layout {
+        padding: 10px;
+        padding-top: 56px;
+    }
+    
+    body.login-layout {
+        padding: 10px;
+    }
+    
+    .glass-container {
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .navbar-content {
+        padding: 0 10px;
+    }
+    
+    .navbar-brand {
+        left: 2%;
+    }
+    
+    .navbar-brand a {
+        font-size: 1.1rem;
+    }
+    
+    .search-container {
+        left: 18%; /* Mobilde biraz daha sola */
+        width: 180px; /* Desktop'a yakın boyut */
+    }
+    
+    .search-box {
+        min-width: 180px;
+        height: 32px; /* Desktop ile aynı yükseklik */
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px; /* Desktop ile aynı radius */
+    }
+    
+    .search-input {
+        font-size: 0.75rem !important;
+        padding: 6px 12px; /* Desktop ile aynı padding */
+        font-weight: 700 !important;
+        letter-spacing: 0.4px !important;
+        text-transform: uppercase !important;
+        font-style: italic !important;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8) !important;
+        transition: none !important;
+        transform: none !important;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: white !important;
+        font-family: 'Fredoka', sans-serif;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .search-button {
+        padding: 4px 6px;
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
+        border-radius: 50%;
+        margin-right: 2px;
+        box-shadow: none !important;
+        width: 24px;
+        height: 24px;
+    }
+    
+    .search-button:hover {
+        background: transparent !important;
+        border: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .search-icon {
+        font-size: 1.3rem !important;
+        text-shadow: none !important; /* Mobil'de de gölge yok */
+        filter: none !important; /* Mobil'de de filter yok */
+    }
+    
+    .search-button:hover .search-icon {
+        transform: none !important;
+        filter: none !important; /* Mobil hover'da da filter yok */
+    }
+    
+    .navbar-user {
+        right: 2%;
+    }
+    
+    .user-icon {
+        font-size: 0.9rem;
+        padding: 6px;
+    }
+}
+
+@media (max-height: 600px) {
+    .glass-container {
+        margin: 10px;
+        padding: 20px;
+    }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .glass-container {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Dock Bar Styles - Global */
+.dock-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.dock {
+    display: flex;
+    align-items: end;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 10px 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    pointer-events: auto;
+    transform: translateY(50px);
+    opacity: 0.3;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dock.expanded {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.dock-trigger {
+    display: none;
+}
+
+.dock-items {
+    display: flex;
+    gap: 8px;
+    align-items: end;
+}
+
+.dock-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.2s ease-out;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.dock-item:hover {
+    transform: scale(1.3) translateY(-10px);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+    z-index: 1001;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+}
+
+.dock-item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Hover gradients for each dock item position */
+.dock-item:nth-child(1):hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.dock-item:nth-child(2):hover { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.dock-item:nth-child(3):hover { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.dock-item:nth-child(4):hover { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.dock-item:nth-child(5):hover { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.dock-item:nth-child(6):hover { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+.dock-item:nth-child(7):hover { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+.dock-item:nth-child(8):hover { background: linear-gradient(135deg, #ff8a80 0%, #ea80fc 100%); }
+.dock-item:nth-child(9):hover { background: linear-gradient(135deg, #8fd3f4 0%, #84fab0 100%); }
+.dock-item:nth-child(10):hover { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+.dock-item:nth-child(11):hover { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+.dock-item:nth-child(12):hover { background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%); }
+.dock-item:nth-child(13):hover { background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%); }
+.dock-item:nth-child(14):hover { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+.dock-item:nth-child(15):hover { background: linear-gradient(135deg, #85ffbd 0%, #fffb7d 100%); }
+.dock-item:nth-child(16):hover { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+.dock-item:nth-child(17):hover { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+.dock-item:nth-child(18):hover { background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%); }
+.dock-item:nth-child(19):hover { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+.dock-item:nth-child(20):hover { background: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 100%); }
+.dock-item:nth-child(21):hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dock {
+        padding: 8px 10px;
+        border-radius: 15px;
+    }
+    
+    .dock-item {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .dock-item:hover {
+        transform: scale(1.2) translateY(-8px);
+    }
+    
+    .dock-items {
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dock-items {
+        max-width: 300px;
+    }
+    
+    .dock-item {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+}
+
+/* Search Container - Modern Glassmorphism */
+.search-container {
+    position: absolute;
+    left: 25%; /* Desktop'ta %25 konumda */
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    opacity: 1;
+    max-width: 400px; /* Desktop için maksimum genişlik */
+    width: 300px; /* Desktop genişliği */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar:hover .search-container {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    min-width: 300px; /* Desktop minimum genişliği */
+    height: 32px; /* Desktop yüksekliği */
+}
+
+.search-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08) 0%, 
+        rgba(255, 255, 255, 0.02) 50%, 
+        rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 25px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.search-box:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.search-box:focus-within {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: none;
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    padding: 6px 12px;
+    font-family: 'Fredoka', sans-serif;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    font-style: italic !important;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8) !important;
+    transition: none !important;
+    transform: none !important;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-transform: capitalize !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.4px !important;
+    font-size: 0.85rem !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+.search-input:focus {
+    transform: none !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    font-style: italic !important;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: white !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8) !important;
+}
+
+.search-input:hover {
+    transform: none !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    font-style: italic !important;
+    color: white !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8) !important;
+}
+
+.search-button {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+    border-radius: 50%;
+    margin-right: 2px;
+    box-shadow: none !important;
+    width: 24px;
+    height: 24px;
+}
+
+.search-button:hover {
+    background: transparent !important;
+    border: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.search-button:active {
+    transform: scale(0.98);
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.search-icon {
+    color: white !important;
+    font-size: 1.5rem !important;
+    text-shadow: none !important;
+    filter: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.search-icon:hover {
+    transform: none !important;
+    filter: none !important;
+}
+
+/* Temel Sekme Stilleri */
+.tabs-container {
+    background: transparent !important;
+    /* border-radius: 8px !important; */
+    /* box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important; */
+    /* padding: 20px !important; */
+    padding: 0 !important;
+    /* margin-top: 20px !important; */
+    margin-top: 0 !important;
+}
+
+/* Modern sekmeler */
+.tabs-container .nav-tabs {
+    border: none !important;
+    background: transparent !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+    gap: 2px;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.tabs-container .nav-tabs .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 600;
+    padding: 0.5rem 0.8rem !important;
+    border: none !important;
+    border-radius: 8px 8px 0 0 !important;
+    margin: 0 1px !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    position: relative;
+    overflow: hidden;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.3px;
+    text-shadow: none !important;
+}
+
+/* Temel Bilgiler - Mavi */
+.tabs-container .nav-tabs .nav-item:nth-child(1) .nav-link {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(41, 128, 185, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(1) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.5), rgba(41, 128, 185, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(1) .nav-link.active {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.8), rgba(41, 128, 185, 0.8)) !important;
+}
+
+/* ERP Bilgileri - Turuncu */
+.tabs-container .nav-tabs .nav-item:nth-child(2) .nav-link {
+    background: linear-gradient(135deg, rgba(243, 156, 18, 0.3), rgba(230, 126, 34, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(2) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(243, 156, 18, 0.5), rgba(230, 126, 34, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(2) .nav-link.active {
+    background: linear-gradient(135deg, rgba(243, 156, 18, 0.8), rgba(230, 126, 34, 0.8)) !important;
+}
+
+/* Özel Yazılım - Mor */
+.tabs-container .nav-tabs .nav-item:nth-child(3) .nav-link {
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(142, 68, 173, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(3) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.5), rgba(142, 68, 173, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(3) .nav-link.active {
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.8), rgba(142, 68, 173, 0.8)) !important;
+}
+
+/* Ağ/Depolama - Yeşil */
+.tabs-container .nav-tabs .nav-item:nth-child(4) .nav-link {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.3), rgba(39, 174, 96, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(4) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.5), rgba(39, 174, 96, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(4) .nav-link.active {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.8), rgba(39, 174, 96, 0.8)) !important;
+}
+
+/* Güvenlik Duvarı - Kırmızı */
+.tabs-container .nav-tabs .nav-item:nth-child(5) .nav-link {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(192, 57, 43, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(5) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.5), rgba(192, 57, 43, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(5) .nav-link.active {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.8), rgba(192, 57, 43, 0.8)) !important;
+}
+
+/* Modem Bilgileri - Cyan */
+.tabs-container .nav-tabs .nav-item:nth-child(6) .nav-link {
+    background: linear-gradient(135deg, rgba(26, 188, 156, 0.3), rgba(22, 160, 133, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(6) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(26, 188, 156, 0.5), rgba(22, 160, 133, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(6) .nav-link.active {
+    background: linear-gradient(135deg, rgba(26, 188, 156, 0.8), rgba(22, 160, 133, 0.8)) !important;
+}
+
+/* Webmail - Sarı */
+.tabs-container .nav-tabs .nav-item:nth-child(7) .nav-link {
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.3), rgba(212, 172, 13, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(7) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.5), rgba(212, 172, 13, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(7) .nav-link.active {
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.8), rgba(212, 172, 13, 0.8)) !important;
+}
+
+/* Özel Parametreler - Pembe */
+.tabs-container .nav-tabs .nav-item:nth-child(8) .nav-link {
+    background: linear-gradient(135deg, rgba(233, 30, 99, 0.3), rgba(190, 24, 93, 0.3)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(8) .nav-link:hover {
+    background: linear-gradient(135deg, rgba(233, 30, 99, 0.5), rgba(190, 24, 93, 0.5)) !important;
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(8) .nav-link.active {
+    background: linear-gradient(135deg, rgba(233, 30, 99, 0.8), rgba(190, 24, 93, 0.8)) !important;
+}
+
+
+
+.tabs-container .nav-tabs .nav-link:hover {
+    color: rgba(255, 255, 255, 0.95) !important;
+    transform: translateY(-1px) !important;
+}
+
+.tabs-container .nav-tabs .nav-link.active {
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.tabs-container .nav-tabs .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 2px 2px 0 0;
+}
+
+/* Aktif sekme alt border renkleri */
+.tabs-container .nav-tabs .nav-item:nth-child(1) .nav-link.active::after {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(2) .nav-link.active::after {
+    background: linear-gradient(90deg, #f39c12, #e67e22);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(3) .nav-link.active::after {
+    background: linear-gradient(90deg, #9b59b6, #8e44ad);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(4) .nav-link.active::after {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(5) .nav-link.active::after {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(6) .nav-link.active::after {
+    background: linear-gradient(90deg, #1abc9c, #16a085);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(7) .nav-link.active::after {
+    background: linear-gradient(90deg, #f1c40f, #d4ac0d);
+}
+
+.tabs-container .nav-tabs .nav-item:nth-child(8) .nav-link.active::after {
+    background: linear-gradient(90deg, #e91e63, #ad1457);
+}
+
+/* Sekme ikonları için stil */
+.tabs-container .nav-tabs .nav-link i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 768px) {
+    .tabs-container .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 0 !important;
+        gap: 1px;
+    }
+    
+    .tabs-container .nav-tabs .nav-link {
+        white-space: nowrap;
+        padding: 0.4rem 0.6rem !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .tabs-container .nav-tabs .nav-link i {
+        display: none;
+    }
+}
+
+/* Sekme İçeriği - Modern */
+.tabs-container .tab-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-top: 30px !important;
+}
+
+.tabs-container .tab-pane {
+    animation: fadeIn 0.5s ease-in-out;
+    background: transparent !important;
+    padding: 10px !important;
+}
+
+/* Form grupları */
+.tabs-container .form-group {
+    /* margin-bottom: 25px; */
+    margin-bottom: 15px !important;
+    background: transparent !important;
+    position: relative;
+}
+
+.tabs-container .form-group label {
+    font-weight: 500 !important;
+    color: #333 !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+}
+
+.tabs-container .form-control,
+.tabs-container .form-select {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15),
+                0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.tabs-container .form-control:focus,
+.tabs-container .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2),
+                0 0 25px rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Doldurulmuş input alanları için stil */
+.tabs-container .form-control:not(:placeholder-shown),
+.tabs-container .form-select:not(:placeholder-shown) {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2),
+                0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+/* Placeholder rengi */
+.tabs-container .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Select (Dropdown) için özel stiller */
+.form-select {
+    cursor: pointer;
+    padding: 12px 45px 12px 20px !important;
+    background: linear-gradient(135deg, rgba(255, 192, 203, 0.3), rgba(255, 182, 193, 0.2)) !important;
+    border: 2px solid rgba(255, 192, 203, 0.3);
+    border-radius: 15px !important;
+    backdrop-filter: blur(20px);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #fff !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='24px' height='24px'%3e%3cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3e%3c/svg%3e") !important;
+    background-size: 20px !important;
+    background-position: right 15px center !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(255, 192, 203, 0.1);
+}
+
+/* Select hover durumu */
+.form-select:hover {
+    background: linear-gradient(135deg, rgba(255, 192, 203, 0.35), rgba(255, 182, 193, 0.25)) !important;
+    border-color: rgba(255, 192, 203, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 192, 203, 0.15),
+                0 0 30px rgba(255, 192, 203, 0.1);
+}
+
+/* Select focus durumu */
+.form-select:focus {
+    background: linear-gradient(135deg, rgba(255, 192, 203, 0.4), rgba(255, 182, 193, 0.3)) !important;
+    border-color: rgba(255, 192, 203, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(255, 192, 203, 0.2),
+                0 0 35px rgba(255, 192, 203, 0.15);
+}
+
+/* Select option'ları için stil */
+.form-select option {
+    background: rgba(255, 192, 203, 0.98);
+    color: #fff;
+    padding: 15px 20px;
+    font-size: 0.95em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Select option hover ve seçili durumu */
+.form-select option:hover,
+.form-select option:focus {
+    background: linear-gradient(135deg, rgba(255, 192, 203, 0.9), rgba(255, 182, 193, 0.8));
+    padding-left: 25px;
+}
+
+.form-select option:checked {
+    background: linear-gradient(135deg, rgba(255, 192, 203, 1), rgba(255, 182, 193, 0.9));
+    font-weight: 500;
+}
+
+/* Select disabled durumu */
+.form-select:disabled {
+    background: linear-gradient(135deg, rgba(255, 192, 203, 0.15), rgba(255, 182, 193, 0.1)) !important;
+    border-color: rgba(255, 192, 203, 0.2);
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255,255,255,0.5)' width='24px' height='24px'%3e%3cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3e%3c/svg%3e") !important;
+}
+
+/* Select için özel pattern deseni */
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm2.5 2.5l7.5 7.5 7.5-7.5' stroke='rgba(255,255,255,0.5)' fill='none' stroke-width='1.5'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, rgba(255, 192, 203, 0.3), rgba(255, 182, 193, 0.2)) !important;
+    background-position: right 15px center, center !important;
+    background-repeat: no-repeat, repeat !important;
+    background-size: 12px, cover !important;
+}
+
+/* Bilgi Kartları */
+.tabs-container .info-card {
+    background: #f8f9fa !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+    margin-bottom: 15px !important;
+}
+
+.tabs-container .info-card .title {
+    font-weight: 600 !important;
+    color: #333 !important;
+    margin-bottom: 10px !important;
+}
+
+/* Özel Sekme Stilleri */
+/* Temel Bilgiler Sekmesi */
+#basic.tab-pane .form-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    margin: -10px !important;
+}
+
+#basic.tab-pane .form-col {
+    flex: 1 !important;
+    min-width: 250px !important;
+    padding: 10px !important;
+}
+
+/* ERP Bilgileri Sekmesi */
+#erp.tab-pane .erp-card {
+    border-left: 4px solid #4CAF50 !important;
+    background: #fff !important;
+    padding: 15px !important;
+    margin-bottom: 15px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+}
+
+/* Ağ Bilgileri Sekmesi */
+#network.tab-pane .network-info {
+    background: linear-gradient(to right, #f8f9fa, #fff) !important;
+    border-radius: 8px !important;
+    padding: 15px !important;
+}
+
+/* Güvenlik Bilgileri Sekmesi */
+#security.tab-pane .security-status {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    border-radius: 6px !important;
+    background: #e8f5e9 !important;
+}
+
+/* Animasyonlar */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tabs-container .tab-pane.active {
+    animation: fadeIn 0.3s ease-out !important;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .tabs-container .nav-tabs {
+        flex-direction: column !important;
+        gap: 5px !important;
+    }
+
+    .tabs-container .nav-tabs .nav-link {
+        width: 100% !important;
+        text-align: left !important;
+        padding: 10px 15px !important;
+        border-radius: 4px !important;
+    }
+
+    .tabs-container .nav-tabs .nav-link.active {
+        background: #f0f7ff !important;
+        border-bottom: none !important;
+        border-left: 3px solid #2196F3 !important;
+    }
+
+    .tabs-container .form-row {
+        flex-direction: column !important;
+    }
+
+    .tabs-container .form-col {
+        width: 100% !important;
+    }
+}
+
+/* Aksiyon Butonları */
+.tabs-container .action-buttons {
+    display: flex !important;
+    gap: 10px !important;
+    margin-top: 20px !important;
+    justify-content: flex-end !important;
+}
+
+.tabs-container .action-button {
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.tabs-container .action-button-primary {
+    background: #2196F3 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.tabs-container .action-button-secondary {
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    border: 1px solid #ddd !important;
+}
+
+.tabs-container .action-button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+}
+
+.tabs-container .action-button-primary:hover {
+    background: #1976D2 !important;
+}
+
+.tabs-container .action-button-secondary:hover {
+    background: #e0e0e0 !important;
+}
+
+/* Validation Mesajları */
+.tabs-container .validation-message {
+    color: #dc3545 !important;
+    font-size: 0.875rem !important;
+    margin-top: 4px !important;
+    display: block !important;
+}
+
+
+
+
+
+
+
+/* Form alanları glass efekti */
+.tabs-container .form-control {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important;
+    color: white !important;
+    padding: 15px 20px !important;
+    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.3px;
+}
+
+.tabs-container .form-control:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-2px);
+}
+
+.tabs-container .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 400;
+}
+
+/* Form etiketleri */
+.tabs-container label {
+    color: white !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tüm container'ların arka planını temizle */
+.container, 
+.container-fluid,
+.row,
+.col,
+.col-md-6,
+.card,
+.card-body {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Form alanı hover efekti */
+.tabs-container .form-control:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.18) !important;
+    transform: translateY(-1px);
+}

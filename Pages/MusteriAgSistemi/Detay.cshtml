@@ -1,0 +1,344 @@
+@page "{id:int}"
+@model deneme.Pages.MusteriAgSistemi.DetayModel
+@using deneme.Models
+@{
+    ViewData["Title"] = "Müşteri Detayları";
+    Layout = "_Layout";
+}
+
+<style>
+    .ag-detail-container {
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 6px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 35px;
+        width: 100%;
+        max-width: 1400px;
+        margin: 50px auto;
+        position: relative;
+    }
+
+    .ag-detail-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        font-family: 'Fredoka', sans-serif;
+        text-align: center;
+    }
+
+    .ag-detail-section {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .ag-detail-section-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        font-family: 'Fredoka', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ag-detail-row {
+        display: flex;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 1rem;
+    }
+
+    .ag-detail-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        width: 200px;
+        flex-shrink: 0;
+    }
+
+    .ag-detail-value {
+        color: white;
+        flex-grow: 1;
+    }
+
+    .ag-detail-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: center;
+    }
+
+    .btn-edit {
+        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-edit:hover {
+        background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(67, 233, 123, 0.25);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-back {
+        background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-back:hover {
+        background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(255, 117, 140, 0.25);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-section-edit {
+        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-section-edit:hover {
+        background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(67, 233, 123, 0.25);
+        color: white;
+        text-decoration: none;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background: rgba(67, 233, 123, 0.2);
+        color: #43e97b;
+        border: 1px solid rgba(67, 233, 123, 0.4);
+    }
+
+    .status-inactive {
+        background: rgba(255, 117, 140, 0.2);
+        color: #ff758c;
+        border: 1px solid rgba(255, 117, 140, 0.4);
+    }
+
+    @@media (max-width: 768px) {
+        .ag-detail-container {
+            margin: 20px;
+            padding: 25px;
+        }
+
+        .ag-detail-title {
+            font-size: 2rem;
+        }
+
+        .ag-detail-row {
+            flex-direction: column;
+        }
+
+        .ag-detail-label {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+<div class="ag-detail-container">
+    <h1 class="ag-detail-title">@Model.Musteri.FirmaUnvani</h1>
+
+    <div class="ag-detail-section">
+        <div class="ag-detail-section-title">
+            <span>Temel Müşteri Bilgileri</span>
+            <a href="/MusteriAgSistemi/Duzenle/@Model.Musteri.Id" class="btn-section-edit">
+                <i class="fas fa-edit me-2"></i>Düzenle
+            </a>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">Durum</div>
+            <div class="ag-detail-value">
+                @if (Model.Musteri.AktifMi)
+                {
+                    <span class="status-badge status-active">Aktif</span>
+                }
+                else
+                {
+                    <span class="status-badge status-inactive">Pasif</span>
+                }
+            </div>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">TCKN</div>
+            <div class="ag-detail-value">@Model.Musteri.TCKN</div>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">Vergi No</div>
+            <div class="ag-detail-value">@Model.Musteri.VergiNo</div>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">Ad Soyad</div>
+            <div class="ag-detail-value">@Model.Musteri.Ad @Model.Musteri.Soyad</div>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">Telefon</div>
+            <div class="ag-detail-value">@Model.Musteri.Telefon</div>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">E-posta</div>
+            <div class="ag-detail-value">@Model.Musteri.Email</div>
+        </div>
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">Adres</div>
+            <div class="ag-detail-value">@Model.Musteri.Adres</div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Musteri.Notlar))
+        {
+            <div class="ag-detail-row">
+                <div class="ag-detail-label">Notlar</div>
+                <div class="ag-detail-value">@Model.Musteri.Notlar</div>
+            </div>
+        }
+
+        <div class="ag-detail-row">
+            <div class="ag-detail-label">Oluşturma Tarihi</div>
+            <div class="ag-detail-value">@Model.Musteri.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</div>
+        </div>
+
+        @if (Model.Musteri.SonGuncellemeTarihi.HasValue)
+        {
+            <div class="ag-detail-row">
+                <div class="ag-detail-label">Son Güncelleme</div>
+                <div class="ag-detail-value">@Model.Musteri.SonGuncellemeTarihi.Value.ToString("dd.MM.yyyy HH:mm")</div>
+            </div>
+        }
+    </div>
+
+    @if (Model.Musteri.ErpBilgileri != null)
+    {
+        <div class="ag-detail-section">
+            <div class="ag-detail-section-title">
+                <span>ERP Bilgileri</span>
+                <a href="/MusteriAgSistemi/ErpDuzenle/@Model.Musteri.Id" class="btn-section-edit">
+                    <i class="fas fa-edit me-2"></i>Düzenle
+                </a>
+            </div>
+            <!-- ERP bilgileri -->
+        </div>
+    }
+
+    @if (Model.Musteri.OzelYazilimBilgileri != null)
+    {
+        <div class="ag-detail-section">
+            <div class="ag-detail-section-title">
+                <span>Özel Yazılım Bilgileri</span>
+                <a href="/MusteriAgSistemi/OzelYazilimDuzenle/@Model.Musteri.Id" class="btn-section-edit">
+                    <i class="fas fa-edit me-2"></i>Düzenle
+                </a>
+            </div>
+            <!-- Özel yazılım bilgileri -->
+        </div>
+    }
+
+    @if (Model.Musteri.AgDepolamaBilgileri != null)
+    {
+        <div class="ag-detail-section">
+            <div class="ag-detail-section-title">
+                <span>Ağ Depolama Bilgileri</span>
+                <a href="/MusteriAgSistemi/AgDepolamaDuzenle/@Model.Musteri.Id" class="btn-section-edit">
+                    <i class="fas fa-edit me-2"></i>Düzenle
+                </a>
+            </div>
+            <!-- Ağ depolama bilgileri -->
+        </div>
+    }
+
+    @if (Model.Musteri.GuvenlikDuvariBilgileri != null)
+    {
+        <div class="ag-detail-section">
+            <div class="ag-detail-section-title">
+                <span>Güvenlik Duvarı Bilgileri</span>
+                <a href="/MusteriAgSistemi/GuvenlikDuvariDuzenle/@Model.Musteri.Id" class="btn-section-edit">
+                    <i class="fas fa-edit me-2"></i>Düzenle
+                </a>
+            </div>
+            <!-- Güvenlik duvarı bilgileri -->
+        </div>
+    }
+
+    @if (Model.Musteri.ModemBilgileri != null)
+    {
+        <div class="ag-detail-section">
+            <div class="ag-detail-section-title">
+                <span>Modem Bilgileri</span>
+                <a href="/MusteriAgSistemi/ModemDuzenle/@Model.Musteri.Id" class="btn-section-edit">
+                    <i class="fas fa-edit me-2"></i>Düzenle
+                </a>
+            </div>
+            <!-- Modem bilgileri -->
+        </div>
+    }
+
+    @if (Model.Musteri.WebmailBilgileri != null)
+    {
+        <div class="ag-detail-section">
+            <div class="ag-detail-section-title">
+                <span>Webmail Bilgileri</span>
+                <a href="/MusteriAgSistemi/WebmailDuzenle/@Model.Musteri.Id" class="btn-section-edit">
+                    <i class="fas fa-edit me-2"></i>Düzenle
+                </a>
+            </div>
+            <!-- Webmail bilgileri -->
+        </div>
+    }
+
+    <div class="ag-detail-buttons">
+        <a href="/MusteriAgSistemi" class="btn-back">
+            <i class="fas fa-arrow-left me-2"></i>Geri Dön
+        </a>
+        <a href="/MusteriAgSistemi/Duzenle/@Model.Musteri.Id" class="btn-edit">
+            <i class="fas fa-edit me-2"></i>Düzenle
+        </a>
+    </div>
+</div> 

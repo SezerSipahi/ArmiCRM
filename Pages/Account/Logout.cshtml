@@ -1,0 +1,17 @@
+@page
+@model deneme.Pages.Account.LogoutModel
+@{
+    ViewData["Title"] = "Çıkış Yapılıyor";
+}
+
+<div class="text-center">
+    <h3>Çıkış yapılıyor...</h3>
+    <p>Lütfen bekleyiniz...</p>
+</div>
+
+<script>
+    // Otomatik olarak login sayfasına yönlendir
+    setTimeout(function() {
+        window.location.href = '/Account/Login';
+    }, 2000);
+</script> 

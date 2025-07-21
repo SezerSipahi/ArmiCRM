@@ -1,0 +1,446 @@
+@page
+@model deneme.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "_LoginLayout";
+}
+
+<style>
+    .login-container {
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 6px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 35px;
+        width: 100%;
+        max-width: 450px;
+        position: relative;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .card-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        font-family: 'Fredoka', sans-serif;
+    }
+
+    .text-muted {
+        color: rgba(255, 255, 255, 0.7) !important;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        color: white;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-check {
+        margin: 1.5rem 0;
+        color: white;
+    }
+
+    .form-check-input {
+        margin-right: 0.5rem;
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 16px rgba(255, 117, 140, 0.15);
+        transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-login:hover {
+        background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        box-shadow: 0 6px 24px rgba(255, 117, 140, 0.25);
+    }
+
+    .links {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .links a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .links a:hover {
+        color: white;
+    }
+
+    .icon {
+        font-size: 1.1rem;
+        user-select: none;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 450px;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        position: relative;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    #registerModal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        width: 90%;
+        max-width: 450px;
+        z-index: 1000;
+        height: auto;
+    }
+
+    #registerModal .modal-content {
+        width: 100%;
+        height: auto;
+        padding: 35px;
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(12px);
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 6px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #registerModal .modal-content form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    #forgotPasswordModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        width: 90%;
+        max-width: 400px;
+        z-index: 1000;
+    }
+
+    #forgotPasswordModal .modal-content {
+        padding: 35px;
+        margin: 0;
+        position: relative;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+    .close:hover {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-register, .btn-forgot {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        margin-top: 1rem;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 16px rgba(255, 117, 140, 0.15);
+        transition: background 0.3s, box-shadow 0.3s;
+    }
+    .btn-register:hover, .btn-forgot:hover {
+        background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        box-shadow: 0 6px 24px rgba(255, 117, 140, 0.25);
+    }
+
+    /* Mobil cihazlar için */
+    @@media (max-width: 480px) {
+        .login-container {
+            width: 95%;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-login {
+            padding: 8px;
+        }
+
+        .links {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .links a {
+            display: block;
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+
+        #registerModal .modal-content {
+            padding: 20px;
+            width: 100%;
+            height: auto;
+        }
+
+        #forgotPasswordModal .modal-content {
+            padding: 25px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="text-center">
+        <h3 class="card-title">Armi CRM</h3>
+        <p class="text-muted">Hoş Geldiniz</p>
+    </div>
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Input.Username"></label>
+            <input asp-for="Input.Username" class="form-control" placeholder="Ad ve soyadınızı giriniz" />
+            <span asp-validation-for="Input.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Password"></label>
+            <input asp-for="Input.Password" class="form-control" placeholder="Şifrenizi giriniz" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-check">
+            <input asp-for="Input.RememberMe" class="form-check-input" />
+            <label asp-for="Input.RememberMe" class="form-check-label"></label>
+        </div>
+        <button type="submit" class="btn-login">Giriş Yap</button>
+        <div class="links">
+            <a onclick="showRegister()">
+                <span class="icon">👤</span>
+                Hesap Oluştur
+            </a>
+            <a onclick="showForgotPassword()">
+                <span class="icon">🔑</span>
+                Şifremi Unuttum
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Hesap Oluştur Modal -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="hideRegister()">&times;</span>
+        <h3 class="card-title">Hesap Oluştur</h3>
+        <p class="text-muted">Yeni bir hesap oluşturun</p>
+        <form id="registerForm" onsubmit="return handleRegister(event)">
+            <div class="form-group">
+                <label>Ad Soyad</label>
+                <input type="text" name="fullName" class="form-control" placeholder="Ad ve soyadınızı giriniz" required />
+            </div>
+            <div class="form-group">
+                <label>E-posta</label>
+                <input type="email" name="email" class="form-control" placeholder="E-posta adresinizi giriniz" required />
+            </div>
+            <div class="form-group">
+                <label>Şifre</label>
+                <input type="password" name="password" class="form-control" placeholder="Şifrenizi giriniz" required />
+            </div>
+            <button type="submit" class="btn-register">Kayıt Ol</button>
+        </form>
+        </div>
+</div>
+
+<!-- Şifremi Unuttum Modal -->
+<div id="forgotPasswordModal">
+    <div class="modal-content">
+        <span class="close" onclick="hideForgotPassword()">&times;</span>
+        <h3 class="card-title">Şifremi Unuttum</h3>
+        <p class="text-muted">Şifrenizi sıfırlamak için e-posta adresinizi girin</p>
+        <form id="forgotPasswordForm" onsubmit="return handleForgotPassword(event)">
+        <div class="form-group">
+            <label>E-posta</label>
+            <input type="email" name="email" class="form-control" placeholder="E-posta adresinizi giriniz" required />
+        </div>
+            <button type="submit" class="btn-forgot">Şifremi Sıfırla</button>
+        </form>
+        </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const loginContainer = document.querySelector('.login-container');
+
+        // Modal işlemleri
+        function showRegister() {
+            document.getElementById('registerModal').style.display = 'block';
+            loginContainer.style.display = 'none';
+        }
+
+        function hideRegister() {
+            document.getElementById('registerModal').style.display = 'none';
+            loginContainer.style.display = 'block';
+        }
+
+        function showForgotPassword() {
+            document.getElementById('forgotPasswordModal').style.display = 'block';
+            loginContainer.style.display = 'none';
+        }
+
+        function hideForgotPassword() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+            loginContainer.style.display = 'block';
+        }
+
+        // Form işlemleri
+        async function handleRegister(event) {
+            event.preventDefault();
+            const form = event.target;
+
+            const user = {
+                fullName: form.fullName.value,
+                email: form.email.value,
+                username: form.fullName.value,
+                password: form.password.value
+            };
+
+            try {
+                const response = await fetch('/api/account/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                });
+
+                if (response.ok) {
+                    alert('Kayıt başarılı! Giriş yapabilirsiniz.');
+                    hideRegister();
+                    form.reset();
+                } else {
+                    const error = await response.text();
+                    alert('Kayıt başarısız: ' + error);
+                }
+            } catch (error) {
+                alert('Bir hata oluştu: ' + error);
+            }
+            return false;
+        }
+
+        async function handleForgotPassword(event) {
+            event.preventDefault();
+            const form = event.target;
+
+            try {
+                const response = await fetch('/api/account/forgot-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: form.email.value })
+                });
+
+                if (response.ok) {
+                    alert('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.');
+                    hideForgotPassword();
+                    form.reset();
+                } else {
+                    const error = await response.text();
+                    alert('İşlem başarısız: ' + error);
+                }
+            } catch (error) {
+                alert('Bir hata oluştu: ' + error);
+            }
+            return false;
+        }
+    </script>
+} 

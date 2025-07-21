@@ -1,0 +1,1449 @@
+@page
+@model deneme.Pages.MusteriAgSistemi.EkleModel
+@using deneme.Models
+@{
+    ViewData["Title"] = "Yeni Müşteri Ekle";
+}
+
+<style>
+    .nav-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        width: 100%;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .nav-tabs .nav-item {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .nav-tabs .nav-link {
+        font-size: 0.7rem;
+        padding: 0.5rem 0.3rem;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border-radius: 8px 8px 0 0;
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+        position: relative;
+        border: none !important;
+        margin: 0 1px;
+    }
+    
+    .nav-tabs .nav-link i {
+        font-size: 0.65rem;
+        margin-right: 0.2rem;
+    }
+    
+    /* Sekme tarzı tasarım */
+    .nav-tabs .nav-item .nav-link {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        border: none !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .nav-tabs .nav-item .nav-link:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    .nav-tabs .nav-item .nav-link.active {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #333 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .nav-tabs .nav-item .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff, #e83e8c);
+        border-radius: 2px 2px 0 0;
+    }
+    
+    /* Genel nav-tabs stilleri */
+    .nav-tabs {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+        gap: 2px;
+    }
+    
+    @@media (max-width: 768px) {
+        .nav-tabs .nav-link {
+            font-size: 0.6rem;
+            padding: 0.25rem 0.1rem;
+        }
+        
+        .nav-tabs .nav-link i {
+            display: none;
+        }
+    }
+    
+    @@media (max-width: 576px) {
+        .nav-tabs .nav-link {
+            font-size: 0.55rem;
+            padding: 0.2rem 0.05rem;
+        }
+    }
+    
+    /* Kare alanları tamamen kaldır */
+    .tabs-container form {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .nav-tabs {
+        background-color: transparent !important;
+        border-bottom: none !important;
+    }
+    
+    .tab-content {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin-top: 30px !important;
+    }
+    
+    .tab-pane {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 10px !important;
+    }
+</style>
+
+<div class="tabs-container">
+    <h2 class="section-title mb-4">Yeni Müşteri Ekle</h2>
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+        <ul class="nav nav-tabs" id="customerTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">
+                    <i class="fas fa-user me-2"></i>Temel
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="erp-tab" data-bs-toggle="tab" data-bs-target="#erp" type="button" role="tab">
+                    <i class="fas fa-building me-2"></i>ERP
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="software-tab" data-bs-toggle="tab" data-bs-target="#software" type="button" role="tab">
+                    <i class="fas fa-code me-2"></i>Yazılım
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" type="button" role="tab">
+                    <i class="fas fa-network-wired me-2"></i>Ağ
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
+                    <i class="fas fa-shield-alt me-2"></i>Güvenlik
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="modem-tab" data-bs-toggle="tab" data-bs-target="#modem" type="button" role="tab">
+                    <i class="fas fa-wifi me-2"></i>Modem
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="webmail-tab" data-bs-toggle="tab" data-bs-target="#webmail" type="button" role="tab">
+                    <i class="fas fa-envelope me-2"></i>Mail
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="parameters-tab" data-bs-toggle="tab" data-bs-target="#parameters" type="button" role="tab">
+                    <i class="fas fa-cogs me-2"></i>Özel
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="customerTabContent">
+            <!-- Temel Bilgiler -->
+            <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.FirmaUnvani" class="form-label">Firma Ünvanı</label>
+                            <input asp-for="Musteri.FirmaUnvani" class="form-control" required />
+                            <span asp-validation-for="Musteri.FirmaUnvani" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.Ad" class="form-label">Ad</label>
+                            <input asp-for="Musteri.Ad" class="form-control" required />
+                            <span asp-validation-for="Musteri.Ad" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.Soyad" class="form-label">Soyad</label>
+                            <input asp-for="Musteri.Soyad" class="form-control" required />
+                            <span asp-validation-for="Musteri.Soyad" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.TCKN" class="form-label">TCKN</label>
+                            <input asp-for="Musteri.TCKN" class="form-control" maxlength="11" />
+                            <span asp-validation-for="Musteri.TCKN" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.VergiNo" class="form-label">Vergi No</label>
+                            <input asp-for="Musteri.VergiNo" class="form-control" maxlength="10" />
+                            <span asp-validation-for="Musteri.VergiNo" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.Telefon" class="form-label">Telefon</label>
+                            <input asp-for="Musteri.Telefon" class="form-control" maxlength="10" />
+                            <span asp-validation-for="Musteri.Telefon" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.Email" class="form-label">E-posta</label>
+                            <input asp-for="Musteri.Email" class="form-control" type="email" required />
+                            <span asp-validation-for="Musteri.Email" class="validation-message"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label asp-for="Musteri.Adres" class="form-label">Adres</label>
+                            <textarea asp-for="Musteri.Adres" class="form-control" rows="3" required></textarea>
+                            <span asp-validation-for="Musteri.Adres" class="validation-message"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ERP Bilgileri -->
+            <div class="tab-pane fade" id="erp" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>ERP Sistemleri</h5>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addErpSystem()">
+                        <i class="fas fa-plus"></i> ERP Sistemi Ekle
+                    </button>
+                </div>
+                <div id="erpSystemsContainer">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Henüz ERP sistemi eklenmemiş. Yukarıdaki "ERP Sistemi Ekle" butonuna tıklayarak sistem ekleyebilirsiniz.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Özel Yazılım Bilgileri -->
+            <div class="tab-pane fade" id="software" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Özel Yazılım Sistemleri</h5>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addSoftwareSystem()">
+                        <i class="fas fa-plus"></i> Yazılım Sistemi Ekle
+                    </button>
+                </div>
+                <div id="softwareSystemsContainer">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Henüz yazılım sistemi eklenmemiş. Yukarıdaki "Yazılım Sistemi Ekle" butonuna tıklayarak sistem ekleyebilirsiniz.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ağ/Depolama Bilgileri -->
+            <div class="tab-pane fade" id="network" role="tabpanel">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.AgDepolamaBilgileri.RaidTipi" class="form-label">RAID Tipi</label>
+                            <input asp-for="Musteri.AgDepolamaBilgileri.RaidTipi" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.AgDepolamaBilgileri.DiskBoyutu" class="form-label">Disk Boyutu (GB)</label>
+                            <input asp-for="Musteri.AgDepolamaBilgileri.DiskBoyutu" class="form-control" type="number" min="0" max="999999" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.AgDepolamaBilgileri.DiskSayisi" class="form-label">Disk Sayısı</label>
+                            <input asp-for="Musteri.AgDepolamaBilgileri.DiskSayisi" class="form-control" type="number" min="0" max="999" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.AgDepolamaBilgileri.YedeklemeDosyaYolu" class="form-label">Yedekleme Dosya Yolu</label>
+                            <input asp-for="Musteri.AgDepolamaBilgileri.YedeklemeDosyaYolu" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.AgDepolamaBilgileri.YedeklemeDurumu" class="form-label">Yedekleme Durumu</label>
+                            <select asp-for="Musteri.AgDepolamaBilgileri.YedeklemeDurumu" class="form-select" asp-items="Html.GetEnumSelectList<YedeklemeDurumu>()">
+                                <option value="">Seçiniz...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.AgDepolamaBilgileri.SonGuncellemeTarihiString" class="form-label">Son Güncelleme Tarihi</label>
+                            <input asp-for="Musteri.AgDepolamaBilgileri.SonGuncellemeTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Güvenlik Duvarı Bilgileri -->
+            <div class="tab-pane fade" id="security" role="tabpanel">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.GuvenlikDuvariBilgileri.GuvenlikDuvariVarMi" class="form-label">Güvenlik Duvarı Var Mı?</label>
+                            <select asp-for="Musteri.GuvenlikDuvariBilgileri.GuvenlikDuvariVarMi" class="form-select">
+                                <option value="false">Hayır</option>
+                                <option value="true">Evet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.GuvenlikDuvariBilgileri.Model" class="form-label">Model</label>
+                            <input asp-for="Musteri.GuvenlikDuvariBilgileri.Model" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.GuvenlikDuvariBilgileri.GuncellemeTarihiString" class="form-label">Güncelleme Tarihi</label>
+                            <input asp-for="Musteri.GuvenlikDuvariBilgileri.GuncellemeTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.GuvenlikDuvariBilgileri.LemTarihiString" class="form-label">LEM Tarihi</label>
+                            <input asp-for="Musteri.GuvenlikDuvariBilgileri.LemTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.GuvenlikDuvariBilgileri.YedeklemeDosyaYolu" class="form-label">Yedekleme Dosya Yolu</label>
+                            <input asp-for="Musteri.GuvenlikDuvariBilgileri.YedeklemeDosyaYolu" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.GuvenlikDuvariBilgileri.YedeklemeDurumu" class="form-label">Yedekleme Durumu</label>
+                            <select asp-for="Musteri.GuvenlikDuvariBilgileri.YedeklemeDurumu" class="form-select" asp-items="Html.GetEnumSelectList<YedeklemeDurumu>()">
+                                <option value="">Seçiniz...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Açık Portlar -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Açık Portlar</label>
+                            <div id="acikPortlarContainer">
+                                <!-- Açık port alanları dinamik olarak buraya eklenecek -->
+                            </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addAcikPort()">
+                                <i class="fas fa-plus"></i> Açık Port Ekle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modem Bilgileri -->
+            <div class="tab-pane fade" id="modem" role="tabpanel">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.ModemBilgileri.Marka" class="form-label">Modem Markası</label>
+                            <input asp-for="Musteri.ModemBilgileri.Marka" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.ModemBilgileri.Model" class="form-label">Modem Modeli</label>
+                            <input asp-for="Musteri.ModemBilgileri.Model" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.ModemBilgileri.YedeklemeDosyaYolu" class="form-label">Yedekleme Dosya Yolu</label>
+                            <input asp-for="Musteri.ModemBilgileri.YedeklemeDosyaYolu" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.ModemBilgileri.YedeklemeDurumu" class="form-label">Yedekleme Durumu</label>
+                            <select asp-for="Musteri.ModemBilgileri.YedeklemeDurumu" class="form-select" asp-items="Html.GetEnumSelectList<YedeklemeDurumu>()">
+                                <option value="">Seçiniz...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.ModemBilgileri.SonGuncellemeTarihiString" class="form-label">Son Güncelleme Tarihi</label>
+                            <input asp-for="Musteri.ModemBilgileri.SonGuncellemeTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                </div>
+            </div>
+
+                    <!-- Varsayılan IP Adresleri -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Varsayılan IP Adresleri</label>
+                            <div id="varsayilanIpContainer">
+                                <!-- Varsayılan IP alanları dinamik olarak buraya eklenecek -->
+                        </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addVarsayilanIp()">
+                                <i class="fas fa-plus"></i> Varsayılan IP Ekle
+                            </button>
+                    </div>
+                        </div>
+                    
+                    <!-- Güncel IP Adresleri -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Güncel IP Adresleri</label>
+                            <div id="guncelIpContainer">
+                                <!-- Güncel IP alanları dinamik olarak buraya eklenecek -->
+                        </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addGuncelIp()">
+                                <i class="fas fa-plus"></i> Güncel IP Ekle
+                            </button>
+                    </div>
+                    </div>
+                    
+                    <!-- Açık Portlar -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Açık Portlar</label>
+                            <div id="modemAcikPortlarContainer">
+                                <!-- Açık port alanları dinamik olarak buraya eklenecek -->
+                        </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addModemAcikPort()">
+                                <i class="fas fa-plus"></i> Açık Port Ekle
+                            </button>
+                    </div>
+                    </div>
+                    
+                    <!-- Kullanıcı Erişim Bilgileri -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Kullanıcı Erişim Bilgileri</label>
+                            <div id="kullaniciErisimContainer">
+                                <!-- Kullanıcı erişim bilgileri dinamik olarak buraya eklenecek -->
+                            </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addKullaniciErisim()">
+                                <i class="fas fa-plus"></i> Kullanıcı Erişim Bilgisi Ekle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Webmail Bilgileri -->
+            <div class="tab-pane fade" id="webmail" role="tabpanel">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.MailHizmetiAlinanFirma" class="form-label">Mail Hizmeti Alınan Firma</label>
+                            <input asp-for="Musteri.WebmailBilgileri.MailHizmetiAlinanFirma" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.GuncellemeTarihiString" class="form-label">Güncelleme Tarihi</label>
+                            <input asp-for="Musteri.WebmailBilgileri.GuncellemeTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.MailKullaniciSayisi" class="form-label">Mail Kullanıcı Sayısı</label>
+                            <input asp-for="Musteri.WebmailBilgileri.MailKullaniciSayisi" class="form-control" type="number" min="0" max="99999" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.AktifWebSitesiVarMi" class="form-label">Aktif Web Sitesi Var Mı?</label>
+                            <select asp-for="Musteri.WebmailBilgileri.AktifWebSitesiVarMi" class="form-select">
+                                <option value="false">Hayır</option>
+                                <option value="true">Evet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.SiteOmegaYazilimTarafindanMiYapildi" class="form-label">Site Omega Yazılım Tarafından Mı Yapıldı?</label>
+                            <select asp-for="Musteri.WebmailBilgileri.SiteOmegaYazilimTarafindanMiYapildi" class="form-select">
+                                <option value="false">Hayır</option>
+                                <option value="true">Evet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.DomainHizmetiSaglayicisi" class="form-label">Domain Hizmeti Sağlayıcısı</label>
+                            <input asp-for="Musteri.WebmailBilgileri.DomainHizmetiSaglayicisi" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.HostingHizmetiSaglayicisi" class="form-label">Hosting Hizmeti Sağlayıcısı</label>
+                            <input asp-for="Musteri.WebmailBilgileri.HostingHizmetiSaglayicisi" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.PortalKullaniciAdi" class="form-label">Portal Kullanıcı Adı</label>
+                            <input asp-for="Musteri.WebmailBilgileri.PortalKullaniciAdi" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Musteri.WebmailBilgileri.PortalSifre" class="form-label">Portal Şifre</label>
+                            <input asp-for="Musteri.WebmailBilgileri.PortalSifre" type="password" class="form-control" />
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+
+            <!-- Özel Parametreler -->
+            <div class="tab-pane fade" id="parameters" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Özel Parametreler</h5>
+                    <button type="button" class="btn btn-success btn-sm" onclick="addOzelParametre()">
+                        <i class="fas fa-plus"></i> Özel Parametre Ekle
+                    </button>
+                </div>
+                <div id="ozelParametrelerContainer">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Henüz özel parametre eklenmemiş. Yukarıdaki "Özel Parametre Ekle" butonuna tıklayarak parametre ekleyebilirsiniz.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button type="submit" class="action-button action-button-primary">
+                <i class="fas fa-save me-2"></i>Kaydet
+            </button>
+            <a href="/MusteriAgSistemi" class="action-button action-button-secondary">
+                <i class="fas fa-times me-2"></i>İptal
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Sadece rakam girişi için kontrol fonksiyonu
+        function onlyNumbers(event) {
+            var charCode = (event.which) ? event.which : event.keyCode;
+            // Özel tuşlara izin ver (backspace, delete, tab, escape, enter)
+            if (charCode == 8 || charCode == 9 || charCode == 27 || charCode == 13 || 
+                // Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z
+                (charCode == 65 && event.ctrlKey === true) || 
+                (charCode == 67 && event.ctrlKey === true) || 
+                (charCode == 86 && event.ctrlKey === true) || 
+                (charCode == 88 && event.ctrlKey === true) || 
+                (charCode == 90 && event.ctrlKey === true) ||
+                // Sol/sağ ok tuşları
+                (charCode >= 35 && charCode <= 40)) {
+                return;
+            }
+            // Sadece rakamlar (0-9)
+            if (charCode < 48 || charCode > 57) {
+                event.preventDefault();
+            }
+        }
+
+        // Sayfa yüklendiğinde kontrolleri ekle
+        document.addEventListener('DOMContentLoaded', function () {
+            // TCKN alanı
+            var tcknInput = document.querySelector('input[name="Musteri.TCKN"]');
+            if (tcknInput) {
+                tcknInput.addEventListener('keydown', onlyNumbers);
+                tcknInput.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    var paste = (e.clipboardData || window.clipboardData).getData('text');
+                    if (/^\d+$/.test(paste)) {
+                        this.value = paste.substr(0, 11);
+                    }
+                });
+            }
+
+            // Vergi No alanı
+            var vergiNoInput = document.querySelector('input[name="Musteri.VergiNo"]');
+            if (vergiNoInput) {
+                vergiNoInput.addEventListener('keydown', onlyNumbers);
+                vergiNoInput.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    var paste = (e.clipboardData || window.clipboardData).getData('text');
+                    if (/^\d+$/.test(paste)) {
+                        this.value = paste.substr(0, 10);
+                    }
+                });
+            }
+
+            // Telefon alanı
+            var telefonInput = document.querySelector('input[name="Musteri.Telefon"]');
+            if (telefonInput) {
+                telefonInput.addEventListener('keydown', onlyNumbers);
+                telefonInput.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    var paste = (e.clipboardData || window.clipboardData).getData('text');
+                    if (/^\d+$/.test(paste)) {
+                        this.value = paste.substr(0, 10);
+                    }
+                });
+            }
+
+            // Form submit validasyonu
+            var form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                var tckn = document.querySelector('input[name="Musteri.TCKN"]').value;
+                var vergiNo = document.querySelector('input[name="Musteri.VergiNo"]').value;
+                var telefon = document.querySelector('input[name="Musteri.Telefon"]').value;
+
+                // TCKN veya Vergi No'dan en az biri zorunlu
+                if (!tckn.trim() && !vergiNo.trim()) {
+                    alert('TCKN veya Vergi No alanlarından en az biri doldurulmalıdır.');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // TCKN kontrolü
+                if (tckn.trim() && (tckn.length !== 11 || !/^\d{11}$/.test(tckn))) {
+                    alert('TCKN 11 haneli ve sadece rakam olmalıdır.');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Vergi No kontrolü
+                if (vergiNo.trim() && (vergiNo.length !== 10 || !/^\d{10}$/.test(vergiNo))) {
+                    alert('Vergi No 10 haneli ve sadece rakam olmalıdır.');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Telefon kontrolü
+                if (telefon.trim() && (telefon.length !== 10 || !/^\d{10}$/.test(telefon))) {
+                    alert('Telefon numarası 10 haneli ve sadece rakam olmalıdır.');
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // Tab'lar arası geçişte form verilerinin korunması
+            var customerTabs = document.getElementById('customerTabs');
+            if (customerTabs) {
+                customerTabs.addEventListener('shown.bs.tab', function (e) {
+                    // Form verilerini localStorage'a kaydet
+                    var form = document.querySelector('form');
+                    var formData = new FormData(form);
+                    var formObject = {};
+                    formData.forEach((value, key) => { formObject[key] = value });
+                    localStorage.setItem('customerFormData', JSON.stringify(formObject));
+                });
+            }
+
+            // Sayfa yüklendiğinde form verilerini geri yükle
+            var savedData = localStorage.getItem('customerFormData');
+            if (savedData) {
+                var formData = JSON.parse(savedData);
+                Object.keys(formData).forEach(key => {
+                    var input = document.querySelector(`[name="${key}"]`);
+                    if (input) input.value = formData[key];
+                });
+            }
+        });
+
+        // Form gönderildiğinde localStorage'ı temizle
+        var form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function () {
+                localStorage.removeItem('customerFormData');
+            });
+        }
+
+        // Server IP adresi ekleme/çıkarma fonksiyonları
+        function addServerIp() {
+            var container = document.getElementById('serverIpContainer');
+            var index = container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-8">
+                    <input type="text" name="ServerIps[${index}].IpAdresi" class="form-control" placeholder="IP Adresi (örn: 192.168.1.100)" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="ServerIps[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeServerIp(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeServerIp(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('serverIpContainer');
+                var rows = container.querySelectorAll('.row');
+                rows.forEach((row, index) => {
+                    var ipInput = row.querySelector('input[name*="IpAdresi"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    if (ipInput) ipInput.name = `ServerIps[${index}].IpAdresi`;
+                    if (aciklamaInput) aciklamaInput.name = `ServerIps[${index}].Aciklama`;
+                });
+            }
+        }
+
+        // ERP sistemleri ekleme/çıkarma fonksiyonları
+        function addErpSystem() {
+            var container = document.getElementById('erpSystemsContainer');
+            var index = container.children.length;
+            
+            // İlk eklenen sistem ise bilgi mesajını kaldır
+            if (container.querySelector('.alert-info')) {
+                container.innerHTML = '';
+            }
+            
+            var newErpSystem = document.createElement('div');
+            newErpSystem.className = 'card mb-3';
+            newErpSystem.innerHTML = `
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">ERP Sistemi #${index + 1}</h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeErpSystem(this)">
+                        <i class="fas fa-trash"></i> Sil
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">ERP Ürün Adı</label>
+                                <input type="text" name="Musteri.ErpBilgileri[${index}].ErpUrunAdi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Sürüm Bilgisi</label>
+                                <input type="text" name="Musteri.ErpBilgileri[${index}].SurumBilgisi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kullanıcı Sayısı</label>
+                                <input type="number" name="Musteri.ErpBilgileri[${index}].KullaniciSayisi" class="form-control" min="0" max="99999" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kullanım Şekli</label>
+                                <select name="Musteri.ErpBilgileri[${index}].KullanimSekli" class="form-select">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="0">Bulut</option>
+                                    <option value="1">Yerel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Lisans Türü</label>
+                                <select name="Musteri.ErpBilgileri[${index}].LisansTuru" class="form-select">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="0">Sınırlı</option>
+                                    <option value="1">Sınırsız</option>
+                                    <option value="2">Dönemsel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kurulum Tarihi</label>
+                                <input type="text" name="Musteri.ErpBilgileri[${index}].KurulumTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">LEM Tarihi</label>
+                                <input type="text" name="Musteri.ErpBilgileri[${index}].LemTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Yedekleme Durumu</label>
+                                <select name="Musteri.ErpBilgileri[${index}].YedeklemeDurumu" class="form-select">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="0">Yok</option>
+                                    <option value="1">Var</option>
+                                    <option value="2">Kısmi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Son Güncelleme Tarihi</label>
+                                <input type="text" name="Musteri.ErpBilgileri[${index}].SonGuncellemeTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Server IP Adresleri</label>
+                                <div id="serverIpContainer_${index}">
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-md-8">
+                                            <input type="text" name="Musteri.ErpBilgileri[${index}].ServerIpAdresleri[0].IpAdresi" class="form-control" placeholder="IP Adresi (örn: 192.168.1.100)" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" name="Musteri.ErpBilgileri[${index}].ServerIpAdresleri[0].Aciklama" class="form-control" placeholder="Açıklama" />
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeErpServerIp(this)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="addErpServerIp(${index})">
+                                    <i class="fas fa-plus"></i> IP Adresi Ekle
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Notlar</label>
+                                <textarea name="Musteri.ErpBilgileri[${index}].Notlar" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newErpSystem);
+        }
+
+        function removeErpSystem(button) {
+            var card = button.closest('.card');
+            if (card) {
+                card.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('erpSystemsContainer');
+                var cards = container.querySelectorAll('.card');
+                
+                if (cards.length === 0) {
+                    container.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> Henüz ERP sistemi eklenmemiş. Yukarıdaki "ERP Sistemi Ekle" butonuna tıklayarak sistem ekleyebilirsiniz.</div>';
+                } else {
+                    cards.forEach((card, index) => {
+                        // Card header'ını güncelle
+                        var header = card.querySelector('.card-header h6');
+                        if (header) header.textContent = `ERP Sistemi #${index + 1}`;
+                        
+                        // Input name'lerini güncelle
+                        var inputs = card.querySelectorAll('input, select, textarea');
+                        inputs.forEach(input => {
+                            if (input.name && input.name.includes('ErpBilgileri[')) {
+                                input.name = input.name.replace(/ErpBilgileri\[\d+\]/, `ErpBilgileri[${index}]`);
+                            }
+                        });
+                        
+                        // Server IP container id'sini güncelle
+                        var serverIpContainer = card.querySelector('[id^="serverIpContainer_"]');
+                        if (serverIpContainer) {
+                            serverIpContainer.id = `serverIpContainer_${index}`;
+                        }
+                        
+                        // Server IP ekleme butonunu güncelle
+                        var addButton = card.querySelector('button[onclick^="addErpServerIp"]');
+                        if (addButton) {
+                            addButton.setAttribute('onclick', `addErpServerIp(${index})`);
+                        }
+                    });
+                }
+            }
+        }
+
+        function addErpServerIp(erpIndex) {
+            var container = document.getElementById(`serverIpContainer_${erpIndex}`);
+            var index = container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-8">
+                    <input type="text" name="Musteri.ErpBilgileri[${erpIndex}].ServerIpAdresleri[${index}].IpAdresi" class="form-control" placeholder="IP Adresi (örn: 192.168.1.100)" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="Musteri.ErpBilgileri[${erpIndex}].ServerIpAdresleri[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeErpServerIp(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeErpServerIp(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var container = row.closest('[id^="serverIpContainer_"]');
+                var rows = container.querySelectorAll('.row');
+                rows.forEach((row, index) => {
+                    var ipInput = row.querySelector('input[name*="IpAdresi"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    if (ipInput) {
+                        var erpIndex = ipInput.name.match(/ErpBilgileri\[(\d+)\]/)[1];
+                        ipInput.name = `Musteri.ErpBilgileri[${erpIndex}].ServerIpAdresleri[${index}].IpAdresi`;
+                    }
+                    if (aciklamaInput) {
+                        var erpIndex = aciklamaInput.name.match(/ErpBilgileri\[(\d+)\]/)[1];
+                        aciklamaInput.name = `Musteri.ErpBilgileri[${erpIndex}].ServerIpAdresleri[${index}].Aciklama`;
+                    }
+                });
+            }
+        }
+
+        // Özel Yazılım sistemleri ekleme/çıkarma fonksiyonları
+        function addSoftwareSystem() {
+            var container = document.getElementById('softwareSystemsContainer');
+            var index = container.children.length;
+            
+            // İlk eklenen sistem ise bilgi mesajını kaldır
+            if (container.querySelector('.alert-info')) {
+                container.innerHTML = '';
+            }
+            
+            var newSoftwareSystem = document.createElement('div');
+            newSoftwareSystem.className = 'card mb-3';
+            newSoftwareSystem.innerHTML = `
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Yazılım Sistemi #${index + 1}</h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeSoftwareSystem(this)">
+                        <i class="fas fa-trash"></i> Sil
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Yazılım İsmi</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].YazilimIsmi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kullanıcı Sayısı</label>
+                                <input type="number" name="Musteri.OzelYazilimBilgileri[${index}].KullaniciSayisi" class="form-control" min="0" max="99999" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kiralama Modeli</label>
+                                <select name="Musteri.OzelYazilimBilgileri[${index}].KiralamaModeli" class="form-select">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="0">Aylık</option>
+                                    <option value="1">Yıllık</option>
+                                    <option value="2">Tek Seferlik</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Entegrasyon Durumu</label>
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" name="Musteri.OzelYazilimBilgileri[${index}].EntegrasyonDurumu" class="form-check-input" />
+                                    <label class="form-check-label">Entegre edildi</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Entegrasyon Açıklama</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].EntegrasyonAciklama" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Destek Veren Firma</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].DestekVerenFirma" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Kurulum Tarihi</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].KurulumTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Sürüm Bilgisi</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].SurumBilgisi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">LEM Tarihi</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].LemTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Güncelleme Tarihi</label>
+                                <input type="text" name="Musteri.OzelYazilimBilgileri[${index}].GuncellemeTarihiString" class="form-control" placeholder="gg.aa.yyyy" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Lisans Türü</label>
+                                <select name="Musteri.OzelYazilimBilgileri[${index}].LisansTuru" class="form-select">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="0">Sınırlı</option>
+                                    <option value="1">Sınırsız</option>
+                                    <option value="2">Dönemsel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Notlar</label>
+                                <textarea name="Musteri.OzelYazilimBilgileri[${index}].Notlar" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newSoftwareSystem);
+        }
+
+        function removeSoftwareSystem(button) {
+            var card = button.closest('.card');
+            if (card) {
+                card.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('softwareSystemsContainer');
+                var cards = container.querySelectorAll('.card');
+                
+                if (cards.length === 0) {
+                    container.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> Henüz yazılım sistemi eklenmemiş. Yukarıdaki "Yazılım Sistemi Ekle" butonuna tıklayarak sistem ekleyebilirsiniz.</div>';
+                } else {
+                    cards.forEach((card, index) => {
+                        // Card header'ını güncelle
+                        var header = card.querySelector('.card-header h6');
+                        if (header) header.textContent = `Yazılım Sistemi #${index + 1}`;
+                        
+                        // Input name'lerini güncelle
+                        var inputs = card.querySelectorAll('input, select, textarea');
+                        inputs.forEach(input => {
+                            if (input.name && input.name.includes('OzelYazilimBilgileri[')) {
+                                input.name = input.name.replace(/OzelYazilimBilgileri\[\d+\]/, `OzelYazilimBilgileri[${index}]`);
+                            }
+                        });
+                    });
+                }
+            }
+        }
+
+        // Açık portlar ekleme/çıkarma fonksiyonları
+        function addAcikPort() {
+            var container = document.getElementById('acikPortlarContainer');
+            var index = container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-3">
+                    <input type="text" name="Musteri.GuvenlikDuvariBilgileri.AcikPortlar[${index}].PortNumarasi" class="form-control" placeholder="Port Numarası" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="Musteri.GuvenlikDuvariBilgileri.AcikPortlar[${index}].Protokol" class="form-control" placeholder="Protokol" />
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="Musteri.GuvenlikDuvariBilgileri.AcikPortlar[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeAcikPort(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeAcikPort(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('acikPortlarContainer');
+                var rows = container.querySelectorAll('.row');
+                rows.forEach((row, index) => {
+                    var portInput = row.querySelector('input[name*="PortNumarasi"]');
+                    var protokolInput = row.querySelector('input[name*="Protokol"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    
+                    if (portInput) portInput.name = `Musteri.GuvenlikDuvariBilgileri.AcikPortlar[${index}].PortNumarasi`;
+                    if (protokolInput) protokolInput.name = `Musteri.GuvenlikDuvariBilgileri.AcikPortlar[${index}].Protokol`;
+                    if (aciklamaInput) aciklamaInput.name = `Musteri.GuvenlikDuvariBilgileri.AcikPortlar[${index}].Aciklama`;
+                });
+            }
+        }
+
+        // Modem bilgileri ekleme/çıkarma fonksiyonları
+        function addVarsayilanIp() {
+            var container = document.getElementById('varsayilanIpContainer');
+            var index = container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-4">
+                    <input type="text" name="Musteri.ModemBilgileri.IpAdresleri[${index}].IpAdresi" class="form-control" placeholder="IP Adresi" />
+                    <input type="hidden" name="Musteri.ModemBilgileri.IpAdresleri[${index}].Tip" value="Varsayılan" />
+                </div>
+                <div class="col-md-7">
+                    <input type="text" name="Musteri.ModemBilgileri.IpAdresleri[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeVarsayilanIp(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeVarsayilanIp(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('varsayilanIpContainer');
+                var rows = container.querySelectorAll('.row');
+                rows.forEach((row, index) => {
+                    var ipInput = row.querySelector('input[name*="IpAdresi"]');
+                    var tipInput = row.querySelector('input[name*="Tip"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    
+                    if (ipInput) ipInput.name = `Musteri.ModemBilgileri.IpAdresleri[${index}].IpAdresi`;
+                    if (tipInput) tipInput.name = `Musteri.ModemBilgileri.IpAdresleri[${index}].Tip`;
+                    if (aciklamaInput) aciklamaInput.name = `Musteri.ModemBilgileri.IpAdresleri[${index}].Aciklama`;
+                });
+            }
+        }
+
+        function addGuncelIp() {
+            var container = document.getElementById('guncelIpContainer');
+            var varsayilanContainer = document.getElementById('varsayilanIpContainer');
+            var baseIndex = varsayilanContainer.children.length;
+            var index = baseIndex + container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-4">
+                    <input type="text" name="Musteri.ModemBilgileri.IpAdresleri[${index}].IpAdresi" class="form-control" placeholder="IP Adresi" />
+                    <input type="hidden" name="Musteri.ModemBilgileri.IpAdresleri[${index}].Tip" value="Güncel" />
+                </div>
+                <div class="col-md-7">
+                    <input type="text" name="Musteri.ModemBilgileri.IpAdresleri[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeGuncelIp(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeGuncelIp(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var varsayilanContainer = document.getElementById('varsayilanIpContainer');
+                var guncelContainer = document.getElementById('guncelIpContainer');
+                var baseIndex = varsayilanContainer.children.length;
+                var rows = guncelContainer.querySelectorAll('.row');
+                
+                rows.forEach((row, index) => {
+                    var actualIndex = baseIndex + index;
+                    var ipInput = row.querySelector('input[name*="IpAdresi"]');
+                    var tipInput = row.querySelector('input[name*="Tip"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    
+                    if (ipInput) ipInput.name = `Musteri.ModemBilgileri.IpAdresleri[${actualIndex}].IpAdresi`;
+                    if (tipInput) tipInput.name = `Musteri.ModemBilgileri.IpAdresleri[${actualIndex}].Tip`;
+                    if (aciklamaInput) aciklamaInput.name = `Musteri.ModemBilgileri.IpAdresleri[${actualIndex}].Aciklama`;
+                });
+            }
+        }
+
+        function addModemAcikPort() {
+            var container = document.getElementById('modemAcikPortlarContainer');
+            var index = container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-3">
+                    <input type="text" name="Musteri.ModemBilgileri.AcikPortlar[${index}].PortNumarasi" class="form-control" placeholder="Port Numarası" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="Musteri.ModemBilgileri.AcikPortlar[${index}].Protokol" class="form-control" placeholder="Protokol" />
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="Musteri.ModemBilgileri.AcikPortlar[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeModemAcikPort(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeModemAcikPort(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('modemAcikPortlarContainer');
+                var rows = container.querySelectorAll('.row');
+                rows.forEach((row, index) => {
+                    var portInput = row.querySelector('input[name*="PortNumarasi"]');
+                    var protokolInput = row.querySelector('input[name*="Protokol"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    
+                    if (portInput) portInput.name = `Musteri.ModemBilgileri.AcikPortlar[${index}].PortNumarasi`;
+                    if (protokolInput) protokolInput.name = `Musteri.ModemBilgileri.AcikPortlar[${index}].Protokol`;
+                    if (aciklamaInput) aciklamaInput.name = `Musteri.ModemBilgileri.AcikPortlar[${index}].Aciklama`;
+                });
+            }
+        }
+
+        function addKullaniciErisim() {
+            var container = document.getElementById('kullaniciErisimContainer');
+            var index = container.children.length;
+            
+            var newRow = document.createElement('div');
+            newRow.className = 'row g-2 mb-2';
+            newRow.innerHTML = `
+                <div class="col-md-3">
+                    <input type="text" name="Musteri.ModemBilgileri.KullaniciErisimBilgileri[${index}].KullaniciAdi" class="form-control" placeholder="Kullanıcı Adı" />
+                </div>
+                <div class="col-md-3">
+                    <input type="password" name="Musteri.ModemBilgileri.KullaniciErisimBilgileri[${index}].Sifre" class="form-control" placeholder="Şifre" />
+                </div>
+                <div class="col-md-5">
+                    <input type="text" name="Musteri.ModemBilgileri.KullaniciErisimBilgileri[${index}].Aciklama" class="form-control" placeholder="Açıklama" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeKullaniciErisim(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+
+        function removeKullaniciErisim(button) {
+            var row = button.closest('.row');
+            if (row) {
+                row.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('kullaniciErisimContainer');
+                var rows = container.querySelectorAll('.row');
+                rows.forEach((row, index) => {
+                    var kullaniciInput = row.querySelector('input[name*="KullaniciAdi"]');
+                    var sifreInput = row.querySelector('input[name*="Sifre"]');
+                    var aciklamaInput = row.querySelector('input[name*="Aciklama"]');
+                    
+                    if (kullaniciInput) kullaniciInput.name = `Musteri.ModemBilgileri.KullaniciErisimBilgileri[${index}].KullaniciAdi`;
+                    if (sifreInput) sifreInput.name = `Musteri.ModemBilgileri.KullaniciErisimBilgileri[${index}].Sifre`;
+                    if (aciklamaInput) aciklamaInput.name = `Musteri.ModemBilgileri.KullaniciErisimBilgileri[${index}].Aciklama`;
+                });
+            }
+        }
+
+        // Tab genişliklerini eşitle
+        function adjustTabWidths() {
+            var tabsContainer = document.querySelector('.nav-tabs');
+            var tabItems = tabsContainer.querySelectorAll('.nav-item');
+            
+            if (tabItems.length > 0) {
+                // Flexbox ile tam eşit dağılım
+                tabItems.forEach(function(item) {
+                    item.style.flex = '1 1 0';
+                    item.style.width = 'auto';
+                });
+            }
+        }
+
+        // Sayfa yüklendiğinde ve pencere boyutu değiştiğinde tab genişliklerini ayarla
+        document.addEventListener('DOMContentLoaded', function() {
+            adjustTabWidths();
+        });
+
+        window.addEventListener('resize', function() {
+            adjustTabWidths();
+        });
+
+        // Özel Parametreler ekleme/çıkarma fonksiyonları
+        function addOzelParametre() {
+            var container = document.getElementById('ozelParametrelerContainer');
+            var index = container.children.length;
+            
+            // İlk eklenen parametre ise bilgi mesajını kaldır
+            if (container.querySelector('.alert-info')) {
+                container.innerHTML = '';
+            }
+            
+            var newParametre = document.createElement('div');
+            newParametre.className = 'card mb-3';
+            newParametre.innerHTML = `
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Özel Parametre #${index + 1}</h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeOzelParametre(this)">
+                        <i class="fas fa-trash"></i> Sil
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Parametre Türü <span class="text-danger">*</span></label>
+                                <select name="Musteri.OzelParametreler[${index}].ParametreTuru" class="form-select" required>
+                                    <option value="">Seçiniz...</option>
+                                    <option value="0">Genel</option>
+                                    <option value="1">Sistem</option>
+                                    <option value="2">Güvenlik</option>
+                                    <option value="3">Yedekleme</option>
+                                    <option value="4">Ağ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Parametre Adı <span class="text-danger">*</span></label>
+                                <input type="text" name="Musteri.OzelParametreler[${index}].ParametreAdi" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Açıklama</label>
+                                <input type="text" name="Musteri.OzelParametreler[${index}].Aciklama" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">İçerik</label>
+                                <textarea name="Musteri.OzelParametreler[${index}].Icerik" class="form-control" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Dosya Yolu</label>
+                                <input type="text" name="Musteri.OzelParametreler[${index}].DosyaYolu" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Versiyon</label>
+                                <input type="text" name="Musteri.OzelParametreler[${index}].Versiyon" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Durum</label>
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" name="Musteri.OzelParametreler[${index}].AktifMi" class="form-check-input" checked />
+                                    <label class="form-check-label">Aktif</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Logo/Resim</label>
+                                <input type="file" name="LogoResim_${index}" class="form-control" accept="image/*" />
+                                <small class="form-text text-muted">Sadece resim dosyaları (jpg, jpeg, png, gif)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newParametre);
+        }
+
+        function removeOzelParametre(button) {
+            var card = button.closest('.card');
+            if (card) {
+                card.remove();
+                // İndeksleri yeniden düzenle
+                var container = document.getElementById('ozelParametrelerContainer');
+                var cards = container.querySelectorAll('.card');
+                
+                if (cards.length === 0) {
+                    container.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> Henüz özel parametre eklenmemiş. Yukarıdaki "Özel Parametre Ekle" butonuna tıklayarak parametre ekleyebilirsiniz.</div>';
+                } else {
+                    cards.forEach((card, index) => {
+                        // Card header'ını güncelle
+                        var header = card.querySelector('.card-header h6');
+                        if (header) header.textContent = `Özel Parametre #${index + 1}`;
+                        
+                        // Input name'lerini güncelle
+                        var inputs = card.querySelectorAll('input, select, textarea');
+                        inputs.forEach(input => {
+                            if (input.name && input.name.includes('OzelParametreler[')) {
+                                input.name = input.name.replace(/OzelParametreler\[\d+\]/, `OzelParametreler[${index}]`);
+                            }
+                            if (input.name && input.name.includes('LogoResim_')) {
+                                input.name = `LogoResim_${index}`;
+                            }
+                        });
+                    });
+                }
+            }
+        }
+    </script>
+} 

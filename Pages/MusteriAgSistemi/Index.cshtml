@@ -1,0 +1,203 @@
+@page
+@model deneme.Pages.MusteriAgSistemi.IndexModel
+@using deneme.Models
+@{
+    ViewData["Title"] = "Müşteri Ağ Sistemi";
+    Layout = "_Layout";
+}
+
+<style>
+    .ag-container {
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 6px rgba(0,0,0,0.18);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 35px;
+        width: 100%;
+        max-width: 1400px;
+        margin: 50px auto;
+        position: relative;
+    }
+
+    .ag-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        font-family: 'Fredoka', sans-serif;
+        text-align: center;
+    }
+
+    .ag-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .ag-card {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 25px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+    }
+
+    .ag-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .ag-card-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-family: 'Fredoka', sans-serif;
+    }
+
+    .ag-card-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .ag-card-button {
+        background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .ag-card-button:hover {
+        background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(67, 233, 123, 0.25);
+        color: white;
+        text-decoration: none;
+    }
+
+    .ag-search {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        position: relative;
+    }
+
+    .ag-search input {
+        width: 100%;
+        padding: 15px 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .ag-search input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .ag-search input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .ag-add-button {
+        background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 100%);
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+
+    .ag-add-button:hover {
+        background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(255, 117, 140, 0.25);
+        color: white;
+        text-decoration: none;
+    }
+
+    @@media (max-width: 768px) {
+        .ag-container {
+            margin: 20px;
+            padding: 25px;
+        }
+
+        .ag-title {
+            font-size: 2rem;
+        }
+
+        .ag-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="ag-container">
+    <h1 class="ag-title">Müşteri Ağ Sistemi</h1>
+
+    <div class="text-center">
+        <a href="/MusteriAgSistemi/Ekle" class="ag-add-button">
+            <i class="fas fa-plus-circle me-2"></i>Yeni Müşteri Ekle
+        </a>
+    </div>
+
+    <div class="ag-search">
+        <input type="text" placeholder="Müşteri ara..." id="musteriArama">
+    </div>
+
+    <div class="ag-grid">
+        @foreach (var musteri in Model.Musteriler)
+        {
+            <div class="ag-card" onclick="window.location.href='/MusteriAgSistemi/Detay/@musteri.Id'">
+                <h3 class="ag-card-title">@musteri.FirmaUnvani</h3>
+                <p class="ag-card-text">
+                    <strong>İletişim:</strong> @musteri.Ad @musteri.Soyad<br>
+                    <strong>Telefon:</strong> @musteri.Telefon<br>
+                    <strong>E-posta:</strong> @musteri.Email
+                </p>
+                <a href="/MusteriAgSistemi/Detay/@musteri.Id" class="ag-card-button">
+                    <i class="fas fa-info-circle me-2"></i>Detayları Görüntüle
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('musteriArama').addEventListener('input', function(e) {
+            const aranan = e.target.value.toLowerCase();
+            const kartlar = document.querySelectorAll('.ag-card');
+
+            kartlar.forEach(kart => {
+                const icerik = kart.textContent.toLowerCase();
+                if (icerik.includes(aranan)) {
+                    kart.style.display = '';
+                } else {
+                    kart.style.display = 'none';
+                }
+            });
+        });
+    </script>
+} 

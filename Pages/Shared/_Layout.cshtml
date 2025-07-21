@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - deneme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/deneme.styles.css" asp-append-version="true" />
+</head>
+<body class="main-layout">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">
+                <a href="/Dashboard">Armi CRM</a>
+            </div>
+            
+            <!-- Modern Search Box -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Arama yapın..." />
+                    <button type="button" class="search-button">
+                        <span class="search-icon">🔍</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="navbar-user">
+                <div class="user-menu">
+                    <div class="user-icon">👤</div>
+                    <div class="user-dropdown">
+                        <a href="/Settings">⚙️ Ayarlar</a>
+                        <a href="/Account/Logout">🚪 Çıkış Yap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Global Dock Bar - Only visible on Dashboard -->
+    <div class="dock-container" id="globalDockBar">
+        <div class="dock" id="dock">
+            <div class="dock-trigger">
+                <span>⬆️</span>
+            </div>
+            <div class="dock-items">
+                <a href="/Dashboard" class="dock-item" onclick="navigateToModule('dashboard')">
+                    🚀
+                    <div class="tooltip">⚡ Komuta Merkezi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('calendar')">
+                    ⏰
+                    <div class="tooltip">🌟 Zaman Yöneticisi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('appointments')">
+                    📍
+                    <div class="tooltip">🎯 Buluşma Noktası</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('tasks')">
+                    ⚡
+                    <div class="tooltip">🚀 Görev Merkezi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('knowledge')">
+                    💡
+                    <div class="tooltip">🧠 Bilgi Hazinesi</div>
+                </a>
+                <a href="/MusteriAgSistemi" class="dock-item">
+                    🌐
+                    <div class="tooltip">💼 Müşteri Ağ Sistemi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('sales')">
+                    💎
+                    <div class="tooltip">💎 Gelir Motoru</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('dashboards')">
+                    📊
+                    <div class="tooltip">📈 Analiz Merkezi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('subscriptions')">
+                    🔥
+                    <div class="tooltip">🔥 Bildirim Hub'ı</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('billing')">
+                    💳
+                    <div class="tooltip">💳 Finans Merkezi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('documents')">
+                    📋
+                    <div class="tooltip">📋 Dijital Arşiv</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('projects')">
+                    🎨
+                    <div class="tooltip">🎨 Proje Atölyesi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('planning')">
+                    🗺️
+                    <div class="tooltip">🗺️ Strateji Masası</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('helpdesk')">
+                    🆘
+                    <div class="tooltip">🆘 Destek Merkezi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('social')">
+                    📱
+                    <div class="tooltip">🌐 Sosyal Radar</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('marketing')">
+                    🎪
+                    <div class="tooltip">🎪 Marka Sahnesi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('surveys')">
+                    🔍
+                    <div class="tooltip">🔍 Görüş Toplayıcı</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('signatures')">
+                    🖋️
+                    <div class="tooltip">🖋️ İmza Stüdyosu</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('employees')">
+                    👑
+                    <div class="tooltip">👑 Takım Yöneticisi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('apps')">
+                    🎮
+                    <div class="tooltip">🎮 Uygulama Galerisi</div>
+                </a>
+                <a href="#" class="dock-item" onclick="openModule('settings')">
+                    🔧
+                    <div class="tooltip">🔧 Sistem Kontrolü</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Global Security Script -->
+    <script>
+        // Global güvenlik kontrolü - tüm sayfalar için
+        window.addEventListener('load', function() {
+            // Sadece login sayfası değilse kontrol et
+            if (!window.location.pathname.includes('/Account/Login')) {
+                // Browser history'yi kontrol et
+                history.pushState(null, null, window.location.href);
+                window.addEventListener('popstate', function() {
+                    // Geri tuşuna basıldığında login sayfasına yönlendir
+                    window.location.replace('/Account/Login');
+                });
+                
+                // Sayfa cache'den gelirse login sayfasına yönlendir
+                window.addEventListener('pageshow', function(event) {
+                    if (event.persisted) {
+                        window.location.replace('/Account/Login');
+                    }
+                });
+                
+                // Performance navigation kontrolü
+                if (performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
+                    window.location.replace('/Account/Login');
+                }
+            }
+        });
+    </script>
+
+    <!-- Global Navigation JavaScript -->
+    <script>
+        function logout() {
+            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+                window.location.href = '/Account/Logout';
+            }
+        }
+
+        function navigateToModule(module) {
+            if (module === 'dashboard') {
+                window.location.href = '/Dashboard';
+                return;
+            }
+        }
+
+        function openModule(moduleName) {
+            alert(moduleName + ' modülü açılıyor...');
+            // window.location.href = '/Pages/' + moduleName + '.cshtml';
+        }
+
+        function showDashboard() {
+            window.location.href = '/Dashboard';
+        }
+
+        // Search functionality
+        function initializeSearch() {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+
+            if (searchInput && searchButton) {
+                // Enter tuşu ile arama
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+
+                // Button click ile arama
+                searchButton.addEventListener('click', performSearch);
+
+                // Real-time search önerileri (isteğe bağlı)
+                searchInput.addEventListener('input', function(e) {
+                    const query = e.target.value;
+                    if (query.length > 2) {
+                        // Burada arama önerileri gösterilebilir
+                        console.log('Arama:', query);
+                    }
+                });
+            }
+        }
+
+        function performSearch() {
+            const searchInput = document.querySelector('.search-input');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                alert(`"${query}" için arama yapılıyor...`);
+                // Gerçek arama işlemi burada yapılacak
+                // window.location.href = `/Search?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        // Dock bar yönetimi - Ana sayfada açık, diğerlerinde hover
+        document.addEventListener('DOMContentLoaded', function() {
+            const dockContainer = document.getElementById('globalDockBar');
+            const dock = document.getElementById('dock');
+            const currentPage = window.location.pathname;
+            const isDashboard = currentPage === '/Dashboard' || currentPage === '/';
+
+            if (isDashboard) {
+                // Ana sayfada dock bar görünür ve açık
+                dockContainer.style.display = 'block';
+                dock.classList.add('expanded');
+                dock.style.pointerEvents = 'auto';
+                
+                // Hover olaylarını devre dışı bırak
+                dock.removeEventListener('mouseenter', expandDock);
+                dock.removeEventListener('mouseleave', collapseDock);
+            } else {
+                // Diğer sayfalarda dock bar görünür ama kapalı
+                dockContainer.style.display = 'block';
+                dock.classList.remove('expanded');
+                
+                // Hover olaylarını aktif et
+                dock.addEventListener('mouseenter', expandDock);
+                dock.addEventListener('mouseleave', collapseDock);
+            }
+
+            // Arama işlevselliğini başlat
+            initializeSearch();
+        });
+
+        function expandDock() {
+            document.getElementById('dock').classList.add('expanded');
+        }
+
+        function collapseDock() {
+            document.getElementById('dock').classList.remove('expanded');
+        }
+
+        // Navbar hover efektleri
+        function addNeighborEffect() {
+            const items = document.querySelectorAll('.dock-item');
+            items.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => {
+                    items.forEach((otherItem, otherIndex) => {
+                        const distance = Math.abs(index - otherIndex);
+                        if (distance === 1) {
+                            otherItem.style.transform = 'scale(1.1) translateY(-2px)';
+                        } else if (distance === 2) {
+                            otherItem.style.transform = 'scale(1.05) translateY(-1px)';
+                        }
+                    });
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    items.forEach((otherItem, otherIndex) => {
+                        if (otherIndex !== index) {
+                            otherItem.style.transform = '';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Sayfa yüklendiğinde komşu efektini başlat
+        document.addEventListener('DOMContentLoaded', addNeighborEffect);
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
